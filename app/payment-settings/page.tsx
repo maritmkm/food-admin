@@ -537,7 +537,7 @@ export default function PaymentSettingsPage() {
                     <div className="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 space-y-2 text-xs">
                       <h4 className="font-extrabold text-[#111827] uppercase tracking-wider text-[11px]">WEBHOOK SETUP</h4>
                       <p className="text-zinc-600">
-                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://yourstore.io/api/store_details/razorpay_webhook/5d0ca4c89f21de0314f98f24</span>
+                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://serveflow.in/api/store_details/razorpay_webhook/5d0ca4c89f21de0314f98f24</span>
                       </p>
                       <p className="text-zinc-600">
                         <strong className="text-zinc-800">Secret:</strong> <span className="font-mono text-zinc-500">5d0ca4c89f21de0314f98f24</span>
@@ -619,7 +619,7 @@ export default function PaymentSettingsPage() {
                     <div className="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 space-y-1.5 text-xs">
                       <h4 className="font-extrabold text-[#111827] uppercase tracking-wider text-[11px]">WEBHOOK SETUP</h4>
                       <p className="text-zinc-600">
-                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://yourstore.io/api/store_details/payu_webhook</span>
+                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://serveflow.in/api/store_details/payu_webhook</span>
                       </p>
                     </div>
 
@@ -681,7 +681,7 @@ export default function PaymentSettingsPage() {
                     <div className="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 space-y-2 text-xs">
                       <h4 className="font-extrabold text-[#111827] uppercase tracking-wider text-[11px]">WEBHOOK SETUP</h4>
                       <p className="text-zinc-600">
-                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://yourstore.io/api/store_details/ccavenue_webhook/5d0ca4c89f21de0314f98f24</span>
+                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://serveflow.in/api/store_details/ccavenue_webhook/5d0ca4c89f21de0314f98f24</span>
                       </p>
                       <p className="text-zinc-500 font-medium pt-1">
                         Add under Dynamic Event Notification &gt; Order status echo URL
@@ -762,7 +762,7 @@ export default function PaymentSettingsPage() {
                     <div className="bg-zinc-50 border border-zinc-100 rounded-2xl p-4 space-y-2 text-xs">
                       <h4 className="font-extrabold text-[#111827] uppercase tracking-wider text-[11px]">WEBHOOK SETUP</h4>
                       <p className="text-zinc-600">
-                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://yourstore.io/api/store_details/stripe_webhook/5d0ca4c89f21de0314f98f24</span>
+                        <strong className="text-zinc-800">Webhook URL:</strong> <span className="font-mono text-zinc-500 break-all">https://serveflow.in/api/store_details/stripe_webhook/5d0ca4c89f21de0314f98f24</span>
                       </p>
                       <p className="text-zinc-600">
                         <strong className="text-zinc-800">Select Events:</strong> <span className="text-zinc-700 font-mono text-[11px]">checkout.session.async_payment_succeeded, checkout.session.completed</span>

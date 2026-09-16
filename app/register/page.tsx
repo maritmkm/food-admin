@@ -215,23 +215,14 @@ export default function AdminRegisterPage() {
         }),
       });
 
-      if (!data.token) {
-        throw new Error('Registration failed. Please try again.');
+      // Do NOT auto-login. Require email verification first.
+      setAuthToken(null);
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('admin_auth_token');
+        localStorage.removeItem('admin_profile');
       }
-
-      setAuthToken(data.token);
       
-      const adminUserData = data.user || {
-        name,
-        email,
-        role: 'admin',
-        companyName,
-        theme: selectedTheme
-      };
-
-      localStorage.setItem('admin_profile', JSON.stringify(adminUserData));
-      
-      // Open the success notice modal with Razorpay payment settings CTA
+      // Open the success notice modal instructing user to verify email
       setShowSuccessModal(true);
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please check your details.');
@@ -718,6 +709,17 @@ export default function AdminRegisterPage() {
               </h3>
             </div>
 
+            {/* Email Verification Box */}
+            <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-left space-y-1 shadow-xs">
+              <div className="flex items-center gap-2 text-emerald-900 font-black text-xs uppercase tracking-wider">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                <span>Verification Email Sent</span>
+              </div>
+              <p className="text-xs text-emerald-950 font-bold leading-relaxed">
+                A verification link was sent to <span className="underline font-black">{email}</span>. Please click the link in your email inbox to verify your email address.
+              </p>
+            </div>
+
             {/* Important Notice Box */}
             <div className="p-5 rounded-2xl bg-amber-50 border-2 border-amber-300/80 text-left space-y-2 shadow-xs">
               <div className="flex items-center gap-2 text-amber-900 font-black text-xs uppercase tracking-wider">
@@ -730,21 +732,13 @@ export default function AdminRegisterPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+            <div className="flex flex-col items-center gap-3 pt-2">
               <button
-                onClick={() => router.push('/payment-settings')}
-                className="w-full sm:flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#111827] hover:bg-black text-[#BBD915] py-3.5 px-5 text-xs font-black uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
+                onClick={() => router.push('/login?registered=true')}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#111827] hover:bg-black text-[#BBD915] py-3.5 px-5 text-xs font-black uppercase tracking-wider transition-all shadow-md active:scale-95 cursor-pointer"
               >
-                <CreditCard className="h-4 w-4" />
-                Payment Gateways &amp; Settings
-              </button>
-
-              <button
-                onClick={() => router.push('/dashboard')}
-                className="w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-[#111827] py-3.5 px-5 text-xs font-bold transition-all active:scale-95 cursor-pointer"
-              >
-                Go to Dashboard
-                <ArrowRight className="h-3.5 w-3.5" />
+                Go to Admin Login Page
+                <ArrowRight className="h-4 w-4" />
               </button>
             </div>
 
