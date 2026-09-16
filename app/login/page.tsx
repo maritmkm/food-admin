@@ -15,6 +15,8 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [error, setError] = useState('');
+  const [verifiedSuccess, setVerifiedSuccess] = useState(false);
+  const [resendingEmail, setResendingEmail] = useState(false);
 
   const [modalAlert, setModalAlert] = useState<{
     isOpen: boolean;
@@ -22,6 +24,48 @@ export default function AdminLoginPage() {
     title?: string;
     message: string;
   }>({ isOpen: false, message: '' });
+
+  const [justRegistered, setJustRegistered] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.search.includes('verified=true')) {
+        setVerifiedSuccess(true);
+      }
+      if (window.location.search.includes('registered=true')) {
+        setJustRegistered(true);
+      }
+    }
+  }, []);
+
+  const handleResendVerification = async () => {
+    if (!email.trim()) {
+      setError('Please enter your email address to resend verification link');
+      return;
+    }
+    setResendingEmail(true);
+    try {
+      const data = await apiRequest('/auth/resend-verification', {
+        method: 'POST',
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      setModalAlert({
+        isOpen: true,
+        type: 'success',
+        title: 'Verification Link Sent',
+        message: data.message || 'A new verification link has been sent to your email address.',
+      });
+    } catch (err: any) {
+      setModalAlert({
+        isOpen: true,
+        type: 'error',
+        title: 'Resend Failed',
+        message: err.message || 'Failed to resend verification link.',
+      });
+    } finally {
+      setResendingEmail(false);
+    }
+  };
 
   useEffect(() => {
     const checkSession = async () => {
@@ -186,10 +230,34 @@ export default function AdminLoginPage() {
             Log in to continue to your account.
           </p>
 
+          {justRegistered && (
+            <div className="mt-6 flex items-center gap-3 rounded-xl bg-amber-50 p-4 text-xs text-amber-800 border border-amber-200">
+              <span className="font-bold">✉️ Registration successful! A verification link has been sent to your email inbox. Please click the link to verify your email before logging in.</span>
+            </div>
+          )}
+
+          {verifiedSuccess && (
+            <div className="mt-6 flex items-center gap-3 rounded-xl bg-emerald-50 p-4 text-xs text-emerald-700 border border-emerald-200">
+              <span className="font-bold">✓ Email verified successfully! You can now log in.</span>
+            </div>
+          )}
+
           {error && (
-            <div className="mt-6 flex items-center gap-3 rounded-xl bg-red-50 p-4 text-xs text-red-600 border border-red-100">
-              <AlertCircle className="h-5 w-5 shrink-0" />
-              <span>{error}</span>
+            <div className="mt-6 space-y-2">
+              <div className="flex items-center gap-3 rounded-xl bg-red-50 p-4 text-xs text-red-600 border border-red-100">
+                <AlertCircle className="h-5 w-5 shrink-0" />
+                <span>{error}</span>
+              </div>
+              {error.toLowerCase().includes('verify') && (
+                <button
+                  type="button"
+                  onClick={handleResendVerification}
+                  disabled={resendingEmail}
+                  className="w-full text-xs font-bold text-zinc-900 bg-amber-100 hover:bg-amber-200 py-2 rounded-lg transition-all cursor-pointer"
+                >
+                  {resendingEmail ? 'Sending Link...' : 'Resend Verification Email'}
+                </button>
+              )}
             </div>
           )}
 
